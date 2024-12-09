@@ -25,6 +25,18 @@ module "resource_groups" {
   }
 }
 
+module "shared_resource_group" {
+  source = "./modules/resource_groups"
+
+  name      = "shared-sandbox-rg"
+  location  = "East US"
+  tags      = {
+    Environment = "DevOps Sandbox"
+    Owner       = "Shared Resources"
+  }
+}
+
+
 module "virtual_network" {
   source              = "./modules/virtual_network"
   for_each            = local.student_map
@@ -54,4 +66,16 @@ module "virtual_machine" {
   }
   admin_username      = var.admin_username
   admin_password      = var.admin_password
+}
+
+module "shared_resources" {
+  source              = "./modules/shared_resources"
+  students            = var.students
+  storage_account_name = "studentstorgtest"
+  resource_group_name = module.shared_resource_group.resource_group_name
+  location            = module.shared_resource_group.resource_group_location
+  tags = {
+    Environment = "DevOps Sandbox"
+    Owner       = "Shared Resources"
+  }
 }
