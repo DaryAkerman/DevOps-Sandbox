@@ -26,7 +26,7 @@ module "resource_groups" {
 }
 
 module "virtual_network" {
-  source              = "./modules/virtual_networks"
+  source              = "./modules/virtual_network"
   for_each            = local.student_map
 
   name                = "${each.key}-vnet"
