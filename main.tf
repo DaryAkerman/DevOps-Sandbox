@@ -20,7 +20,7 @@ module "resource_groups" {
   name      = "${each.key}-sandbox-rg"
   location  = "East US"
   tags      = {
-    Environment = "DevOps Sandox"
+    Environment = "DevOps Sandbox"
     Owner       = each.key
   }
 }
@@ -36,7 +36,6 @@ module "shared_resource_group" {
   }
 }
 
-
 module "virtual_network" {
   source              = "./modules/virtual_network"
   for_each            = local.student_map
@@ -47,7 +46,6 @@ module "virtual_network" {
   address_space       = ["10.${each.value}.0.0/16"]
   subnet_address_prefix = "10.${each.value}.0.0/24"
 }
-
 
 module "virtual_machine" {
   source              = "./modules/virtual_machine"
@@ -77,5 +75,22 @@ module "shared_resources" {
   tags = {
     Environment = "DevOps Sandbox"
     Owner       = "Shared Resources"
+  }
+}
+
+module "monitoring" {
+  source              = "./modules/monitoring"
+  workspace_name      = "sandbox-monitoring-workspace"
+  location            = module.shared_resource_group.resource_group_location
+  resource_group_name = module.shared_resource_group.resource_group_name
+  retention_days      = 30
+
+  vm_ids = {
+    for key, vm in module.virtual_machine : key => vm.vm_id
+  }
+
+  tags = {
+    Environment = "DevOps Sandbox"
+    Owner       = "Monitoring"
   }
 }
