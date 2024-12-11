@@ -37,3 +37,9 @@ variable "default_password" {
   description = "The default password for each Azure User"
   type        = string
 }
+
+variable "force_cleanup" {
+  description = "Flag to force cleanup regardless of time"
+  type        = bool
+  default     = false
+}

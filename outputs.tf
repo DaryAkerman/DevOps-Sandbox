@@ -12,7 +12,3 @@ output "public_ips" {
   description = "A map of all public IP addresses for the virtual machines"
   value       = { for student, vm in module.virtual_machine : student => vm.public_ip }
 }
-
-
-
-

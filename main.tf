@@ -16,7 +16,7 @@ locals {
 
 module "resource_groups" {
   source    = "./modules/resource_groups"
-  for_each = toset(var.students)
+  for_each  = toset(var.students)
   name      = "${each.key}-sandbox-rg"
   location  = "East US"
   tags      = {
@@ -94,9 +94,9 @@ module "monitoring" {
 module "rbac" {
   source = "./modules/rbac"
 
-  students_info         = var.students_info
-  resource_group_ids    = { for key, module in module.resource_groups : key => module.resource_group_id }
-  default_password      = var.default_password
-  role_definition_name  = var.role_definition_name
+  students_info       = var.students_info
+  resource_group_ids  = { for key, rg in module.resource_groups : key => rg.resource_group_id }
+  default_password    = var.default_password
+  role_definition_name = var.role_definition_name
 }
 
