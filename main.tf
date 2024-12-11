@@ -85,12 +85,18 @@ module "monitoring" {
   resource_group_name = module.shared_resource_group.resource_group_name
   retention_days      = 30
 
-  vm_ids = {
-    for key, vm in module.virtual_machine : key => vm.vm_id
-  }
-
   tags = {
     Environment = "DevOps Sandbox"
     Owner       = "Monitoring"
   }
 }
+
+module "rbac" {
+  source = "./modules/rbac"
+
+  students_info         = var.students_info
+  resource_group_ids    = { for key, module in module.resource_groups : key => module.resource_group_id }
+  default_password      = var.default_password
+  role_definition_name  = var.role_definition_name
+}
+
