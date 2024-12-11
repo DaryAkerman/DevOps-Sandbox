@@ -25,3 +25,7 @@ variable "tags" {
   default     = {}
 }
 
+variable "vm_ids" {
+  description = "A map of Linux VM resource IDs"
+  type        = map(string)
+}

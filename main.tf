@@ -85,6 +85,10 @@ module "monitoring" {
   resource_group_name = module.shared_resource_group.resource_group_name
   retention_days      = 30
 
+  vm_ids = {
+    for key, vm in module.virtual_machine : key => vm.vm_id
+  }
+
   tags = {
     Environment = "DevOps Sandbox"
     Owner       = "Monitoring"
