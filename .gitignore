@@ -25,3 +25,6 @@ terraform.rc
 .terraform/
 
 .terraform.lock.*
+main.ps1
+remove.ps1
+update_tfvars.ps1

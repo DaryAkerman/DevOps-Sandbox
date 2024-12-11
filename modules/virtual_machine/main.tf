@@ -29,6 +29,8 @@ resource "azurerm_virtual_machine" "student_vm" {
   network_interface_ids = [azurerm_network_interface.vm_nic.id]
   vm_size               = var.vm_size
 
+  delete_os_disk_on_termination  = true
+  delete_data_disks_on_termination = true
   storage_os_disk {
     name                = "${var.name}-disk"
     caching             = "ReadWrite"
@@ -47,6 +49,7 @@ resource "azurerm_virtual_machine" "student_vm" {
     computer_name  = var.name
     admin_username = var.admin_username
     admin_password = var.admin_password
+    custom_data    = base64encode(file("${path.module}/scripts/install_docker_python.sh"))
   }
 
   os_profile_linux_config {
