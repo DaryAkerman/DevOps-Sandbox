@@ -1,5 +1,7 @@
 # Azure DevOps Sandbox Project
 
+![Project Architecture](devops-sandbox-diagram-done.gif)
+
 ## Overview
 This project provides a fully automated and isolated environment for students to practice DevOps concepts using Azure. It includes modules for creating resource groups, virtual networks, virtual machines, monitoring, and automatic cleanup using bash(terraform destroy). Students can interact with the system by entering their details, and the infrastructure is dynamically created and managed through Terraform.
 
